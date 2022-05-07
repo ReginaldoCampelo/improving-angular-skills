@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "start:app": "ng serve -o improving-angular-skills --port 8000"
   },
   "private": true,
   "dependencies": {
