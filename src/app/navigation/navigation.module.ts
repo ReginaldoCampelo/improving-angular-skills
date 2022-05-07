@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { MenuComponent } from './menu/menu.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 
 
@@ -11,7 +12,8 @@ import { MenuComponent } from './menu/menu.component';
   declarations: [
     FooterComponent,
     HomeComponent,
-    MenuComponent
+    MenuComponent,
+    NotFoundComponent
   ],
   imports: [
     CommonModule,
