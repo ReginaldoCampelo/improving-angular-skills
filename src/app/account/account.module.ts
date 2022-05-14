@@ -9,6 +9,10 @@ import { AccountRouteModule } from './account.route';
 import { AccountAppComponent } from './account.app.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
+import { AccountService } from './shared/services/account.service';
+
+import { CustomFormsModule } from 'ng2-validation'
+
 
 
 @NgModule({
@@ -23,7 +27,9 @@ import { LoginComponent } from './login/login.component';
     AccountRouteModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
-  ]
+    HttpClientModule,
+    CustomFormsModule
+  ],
+  providers: [AccountService]
 })
 export class AccountModule { }
