@@ -1,1 +1,62 @@
-<p>register works!</p>
+<div class="container main-container">
+    <h1>Cadastro</h1>
+
+    <form novalidate (ngSubmit)="saveAccount()" [formGroup]="registerForm">
+
+        <h4>Crie sua conta</h4>
+        <hr>
+
+        <!-- show errors from form -->
+        <div class="alert alert-danger" *ngIf="errors.length > 0">
+            <h3 id="msgRetorno">Opa! Alguma coisa não deu certo:</h3>
+            <ul>
+                <li *ngFor="let error of errors">{{ error }}</li>
+            </ul>
+        </div>
+
+        <!-- email -->
+        <div class="form-group mb-3">
+            <label class="col-md-2 control-label">E-mail</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="email" placeholder="E-mail (requerido)"
+                    formControlName="email" [ngClass]="{'is-invalid': displayMessage.email }" />
+                <span class="text-danger" *ngIf="displayMessage.email">
+                    <p [innerHTML]="displayMessage.email"></p>
+                </span>
+            </div>
+        </div>
+
+        <!-- password -->
+        <div class="form-group mb-3">
+            <label class="col-md-2 control-label">Senha</label>
+            <div class="col-md-10">
+                <input type="password" class="form-control" id="password" placeholder="Senha (requerido)"
+                    formControlName="password" [ngClass]="{'is-invalid': displayMessage.password }" />
+                <span class="text-danger" *ngIf="displayMessage.password">
+                    <p [innerHTML]="displayMessage.password"></p>
+                </span>
+            </div>
+        </div>
+
+        <!-- confirm-password -->
+        <div class="form-group mb-3">
+            <label class="col-md-2 control-label">Confirmar senha</label>
+            <div class="col-md-10">
+                <input type="password" class="form-control" id="confirmPassword"
+                    placeholder="Confirmar senha (requerido)" formControlName="confirmPassword"
+                    [ngClass]="{'is-invalid': displayMessage.confirmPassword }" />
+                <span class="text-danger" *ngIf="displayMessage.confirmPassword">
+                    <p [innerHTML]="displayMessage.confirmPassword"></p>
+                </span>
+            </div>
+        </div>
+
+        <!-- submit button -->
+        <div class="form-group">
+            <div class="col-md-4 com-md-offset-2">
+                <span><button class="btn btn-success" id="Registrar" [disabled]="!registerForm.valid"
+                        type="submit">Registrar</button></span>
+            </div>
+        </div>
+    </form>
+</div>
