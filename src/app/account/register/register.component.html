@@ -6,14 +6,6 @@
         <h4>Crie sua conta</h4>
         <hr>
 
-        <!-- show errors from form -->
-        <div class="alert alert-danger" *ngIf="errors.length > 0">
-            <h3 id="msgRetorno">Opa! Alguma coisa não deu certo:</h3>
-            <ul>
-                <li *ngFor="let error of errors">{{ error }}</li>
-            </ul>
-        </div>
-
         <!-- email -->
         <div class="form-group mb-3">
             <label class="col-md-2 control-label">E-mail</label>
@@ -57,6 +49,15 @@
                 <span><button class="btn btn-success" id="Registrar" [disabled]="!registerForm.valid"
                         type="submit">Registrar</button></span>
             </div>
+        </div>
+
+        <!-- show errors from form -->
+        <div class="alert alert-danger w-50 mt-5" *ngIf="errors.length > 0">
+            <h1><i class="fa fa-triangle-exclamation float-end"></i></h1>
+            <h3 id="returnMessage">Atenção! Algo não deu certo:</h3>
+            <ul>
+                <li *ngFor="let error of errors"> <i class="fa-solid fa-arrow-right"></i> {{ error }}</li>
+            </ul>
         </div>
     </form>
 </div>

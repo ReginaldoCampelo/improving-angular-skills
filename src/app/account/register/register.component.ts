@@ -74,19 +74,20 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       this.user = Object.assign({}, this.user, this.registerForm.value);
 
       this.accountService.registerUser(this.user)
-      .subscribe(
-        forSuccess => { this.actionForSuccess(forSuccess) },
-        forFailure => { this.actionForFailure(forFailure) }
-      );
+        .subscribe(
+          forSuccess => { this.actionForSuccess(forSuccess) },
+          forFailure => { this.actionForFailure(forFailure) }
+        );
     }
   }
 
   actionForSuccess(sucess: any) {
-
+    this.registerForm.reset();
+    this.errors = [];
   }
 
   actionForFailure(fail: any) {
-
+    this.errors = fail.error.errors;
   }
-  
+
 }
