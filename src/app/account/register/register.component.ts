@@ -27,7 +27,11 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   genericValidator: GenericValidator;
   displayMessage: DisplayMessage = {};
 
-  constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private accountService: AccountService,
+    private router: Router
+  ) {
     this.validationMessages = {
       email: {
         required: 'Informe o e-mail',
@@ -81,9 +85,13 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
   }
 
-  actionForSuccess(sucess: any) {
+  actionForSuccess(success: any) {
     this.registerForm.reset();
     this.errors = [];
+
+    this.accountService.LocalStorage.salvarDadosLocaisUsuario(success);
+
+    this.router.navigate(['/home']);
   }
 
   actionForFailure(fail: any) {
