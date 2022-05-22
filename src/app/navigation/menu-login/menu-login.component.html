@@ -1,1 +1,18 @@
-<p>menu-login works!</p>
+<ul [ngSwitch]="userLogged()" class="navbar-nav">
+    <li *ngSwitchCase="false" class="nav-item" style="padding-right: 30px;">
+        <a class="btn btn-primary" [routerLink]="['/conta/login']">Entrar</a>
+    </li>
+
+    <li *ngSwitchCase="false" class="nav-item">
+        <a class="btn btn-success" [routerLink]="['/account/register']">Crie sua conta</a>
+    </li>
+
+    <li *ngSwitchCase="true" class="nav-item">
+        <a class="nav-link text-dark me-3" id="saudacaoUsuario" href="javascript:void(0)">{{ email }}</a>
+    </li>
+
+    <li *ngSwitchCase="true" class="nav-item">
+        <a class="nav-link text-dark" href="javascript:void(0)" (click)="logout()">
+            Sair <span><i class="fas fa-sign-out-alt"></i></span>
+        </a>
+</ul>

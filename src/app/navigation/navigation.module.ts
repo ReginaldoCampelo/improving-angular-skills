@@ -30,7 +30,8 @@ import { MenuLoginComponent } from './menu-login/menu-login.component';
     FooterComponent,
     HomeComponent,
     MenuComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    MenuLoginComponent
   ]
 })
 export class NavigationModule { }
