@@ -1,14 +1,19 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChildren } from '@angular/core';
 import { FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
-import { DisplayMessage, GenericValidator, ValidationMessages } from 'src/app/utils/generic-form-validation';
+import { fromEvent, merge, Observable } from 'rxjs';
+
+import { CustomValidators } from 'ng2-validation'
+import { ToastrService } from 'ngx-toastr';
 
 import { User } from '../shared/models/user';
 import { AccountService } from '../shared/services/account.service';
+import { DisplayMessage, GenericValidator, ValidationMessages } from 'src/app/utils/generic-form-validation';
 
-import { CustomValidators } from 'ng2-validation'
-import { fromEvent, merge, Observable } from 'rxjs';
-import { Router } from '@angular/router';
+
+
+
 
 @Component({
   selector: 'app-register',
@@ -30,7 +35,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private accountService: AccountService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
     this.validationMessages = {
       email: {
@@ -91,11 +97,17 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
     this.accountService.LocalStorage.salvarDadosLocaisUsuario(success);
 
-    this.router.navigate(['/home']);
+    let toast = this.toastr.success('Usuário cadastrado com sucesso!', 'Bem vindo!');
+    if(toast) {
+      toast.onHidden.subscribe(() => {
+        this.router.navigate(['/home']);
+      });
+    }
   }
 
   actionForFailure(fail: any) {
     this.errors = fail.error.errors;
+    this.toastr.error('Ocorreu um erro ao tentar cadastrar o usuário', 'Ops! :(');
   }
 
 }
