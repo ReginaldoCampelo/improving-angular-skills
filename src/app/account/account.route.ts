@@ -11,8 +11,8 @@ const accountRouterConfig: Routes = [
     {
         path: '', component: AccountAppComponent,
         children: [
-            { path: 'register', component: RegisterComponent, canDeactivate: [AccountGuardService] },
-            { path: 'login', component: LoginComponent }
+            { path: 'register', component: RegisterComponent, canActivate: [AccountGuardService] ,canDeactivate: [AccountGuardService] },
+            { path: 'login', component: LoginComponent, canActivate: [AccountGuardService] }
         ]
     }
 ]
