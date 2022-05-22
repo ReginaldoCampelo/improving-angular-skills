@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { AccountService } from './shared/services/account.service';
 
 import { CustomFormsModule } from 'ng2-validation'
+import { AccountGuardService } from '../shared/services/account-guard.service';
 
 
 
@@ -30,6 +31,6 @@ import { CustomFormsModule } from 'ng2-validation'
     HttpClientModule,
     CustomFormsModule
   ],
-  providers: [AccountService]
+  providers: [AccountService, AccountGuardService]
 })
 export class AccountModule { }

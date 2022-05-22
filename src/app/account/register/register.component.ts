@@ -32,6 +32,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   genericValidator: GenericValidator;
   displayMessage: DisplayMessage = {};
 
+  unsavedChanges: boolean;
+
   constructor(
     private fb: FormBuilder,
     private accountService: AccountService,
@@ -76,6 +78,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
     merge(...controlBlurs).subscribe(() => {
       this.displayMessage = this.genericValidator.processarMensagens(this.registerForm);
+      this.unsavedChanges = true;
     });
   }
 
@@ -88,6 +91,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
           forSuccess => { this.actionForSuccess(forSuccess) },
           forFailure => { this.actionForFailure(forFailure) }
         );
+
+        this.unsavedChanges = false;
     }
   }
 
