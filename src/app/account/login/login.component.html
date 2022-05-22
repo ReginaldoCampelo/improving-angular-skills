@@ -1,1 +1,50 @@
-<p>login works!</p>
+<div class="container main-container">
+    <h1>Login</h1>
+
+    <form novalidate (ngSubmit)="logIn()" [formGroup]="loginForm">
+
+        <h4>Entre na sua conta</h4>
+        <hr>
+
+        <!-- show errors from form -->
+        <div class="alert alert-danger mt-2 mb-5" *ngIf="errors.length > 0">
+            <h1><i class="fa fa-triangle-exclamation float-end"></i></h1>
+            <h3 id="returnMessage">Ops! Algo deu errado...</h3>
+            <ul>
+                <li *ngFor="let error of errors"> <i class="fa-solid fa-arrow-right"></i> {{ error }}</li>
+            </ul>
+        </div>
+
+        <!-- email -->
+        <div class="form-group mb-3">
+            <label class="col-md-2 control-label">E-mail</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="email" placeholder="E-mail (requerido)"
+                    formControlName="email" [ngClass]="{'is-invalid': displayMessage.email }" />
+                <span class="text-danger" *ngIf="displayMessage.email">
+                    <p [innerHTML]="displayMessage.email"></p>
+                </span>
+            </div>
+        </div>
+
+        <!-- password -->
+        <div class="form-group mb-3">
+            <label class="col-md-2 control-label">Senha</label>
+            <div class="col-md-10">
+                <input type="password" class="form-control" id="password" placeholder="Senha (requerido)"
+                    formControlName="password" [ngClass]="{'is-invalid': displayMessage.password }" />
+                <span class="text-danger" *ngIf="displayMessage.password">
+                    <p [innerHTML]="displayMessage.password"></p>
+                </span>
+            </div>
+        </div>
+
+        <!-- submit button -->
+        <div class="form-group">
+            <div class="col-md-4 com-md-offset-2">
+                <span><button class="btn btn-success" id="Login" [disabled]="!loginForm.valid"
+                        type="submit">Login</button></span>
+            </div>
+        </div>
+    </form>
+</div>
