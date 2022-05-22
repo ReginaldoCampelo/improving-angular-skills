@@ -5,10 +5,12 @@ import { RouterModule } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { MenuComponent } from './menu/menu.component';
+import { MenuLoginComponent } from './menu-login/menu-login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { MenuLoginComponent } from './menu-login/menu-login.component';
+import { ToastrModule } from 'ngx-toastr';
+
 
 
 
@@ -23,7 +25,8 @@ import { MenuLoginComponent } from './menu-login/menu-login.component';
   imports: [
     CommonModule,
     RouterModule,
-    NgbModule
+    NgbModule,
+    ToastrModule.forRoot()
   ],
   exports: [
     // shared components

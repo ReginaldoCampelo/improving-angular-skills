@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { LocalStorageUtils } from 'src/app/utils/localstorage';
+
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-menu-login',
@@ -14,7 +17,7 @@ export class MenuLoginComponent implements OnInit {
   email: string = '';
   localStorageUtils = new LocalStorageUtils();
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private toastr: ToastrService) { }
 
   userLogged(): boolean {
     this.token = this.localStorageUtils.obterTokenUsuario();
@@ -28,7 +31,12 @@ export class MenuLoginComponent implements OnInit {
 
   logout(): void {
     this.localStorageUtils.limparDadosLocaisUsuario();
-    this.router.navigate(['/home']);
+    let toastr = this.toastr.info('Solicitação realizado com sucesso!, ', 'Logout');
+    if(toastr) {
+      toastr.onHidden.subscribe(() => {
+        this.router.navigate(['/home']);
+      });
+    }
   }
 
   ngOnInit(): void {
