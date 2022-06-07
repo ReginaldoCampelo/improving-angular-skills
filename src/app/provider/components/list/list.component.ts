@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Provider } from '../../shared/models/provider';
+import { ProviderService } from '../../shared/service/provider.service';
 
 @Component({
   selector: 'app-list',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
 
-  constructor() { }
+  public providers: Provider[];
+  errorMessage: string;
+
+  constructor(private providerService: ProviderService) { }
 
   ngOnInit(): void {
+    this.providerService.getAll()
+    .subscribe(
+      providers => this.providers = providers,
+      error => this.errorMessage);
   }
-
 }
