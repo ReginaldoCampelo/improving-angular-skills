@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChildren } from '@angular/core';
-import { FormBuilder, FormControlName, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControlName, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { fromEvent, merge, Observable } from 'rxjs';
 
@@ -28,6 +28,8 @@ export class NewComponent implements OnInit, AfterViewInit {
   genericValidator: GenericValidator;
   displayMessage: DisplayMessage = {};
 
+  documentText: string;
+
   MASKS = utilsBr.MASKS;
   formResult: string = '';
 
@@ -41,6 +43,7 @@ export class NewComponent implements OnInit, AfterViewInit {
       documento: {
         required: 'Informe o Documento',
         cpf: 'CPF em formato inválido',
+        cnpj: 'CNPJ em formato inválido',
       },
       logradouro: {
         required: 'Informe o Logradouro',
@@ -52,7 +55,8 @@ export class NewComponent implements OnInit, AfterViewInit {
         required: 'Informe o Bairro',
       },
       cep: {
-        required: 'Informe o CEP'
+        required: 'Informe o CEP',
+        cep: 'CEP em formato inválido',
       },
       cidade: {
         required: 'Informe a Cidade',
@@ -78,7 +82,7 @@ export class NewComponent implements OnInit, AfterViewInit {
         numero: ['', [Validators.required]],
         complemento: [''],
         bairro: ['', [Validators.required]],
-        cep: ['', [Validators.required]],
+        cep: ['', [Validators.required, NgBrazilValidators.cep]],
         cidade: ['', [Validators.required]],
         estado: ['', [Validators.required]],
       })
@@ -88,13 +92,50 @@ export class NewComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+
+    this.providerTypeForm().valueChanges
+      .subscribe(() => {
+        this.changeDocumentValidation();
+        this.configureValidationElements();
+        this.validateForm();
+      });
+
+    this.configureValidationElements();
+  }
+
+  configureValidationElements() {
     let controlBlurs: Observable<any>[] = this.formInputElements
       .map((formControl: ElementRef) => fromEvent(formControl.nativeElement, 'blur'));
 
     merge(...controlBlurs).subscribe(() => {
-      this.displayMessage = this.genericValidator.processarMensagens(this.providerForm);
-      this.unsavedChanges = true;
+      this.validateForm();
     });
+  }
+
+  validateForm() {
+    this.displayMessage = this.genericValidator.processarMensagens(this.providerForm);
+    this.unsavedChanges = true;
+  }
+
+  changeDocumentValidation() {
+    if (this.providerTypeForm().value === "1") {
+      this.document().clearValidators();
+      this.document().setValidators([Validators.required, NgBrazilValidators.cpf]);
+      this.documentText = "CPF (requerido)";
+    }
+    else {
+      this.document().clearValidators();
+      this.document().setValidators([Validators.required, NgBrazilValidators.cnpj]);
+      this.documentText = "CNPJ (requerido)";
+    }
+  }
+
+  providerTypeForm(): AbstractControl {
+    return this.providerForm.get('tipoFornecedor');
+  }
+
+  document(): AbstractControl {
+    return this.providerForm.get('documento');
   }
 
   insertProvider() {
