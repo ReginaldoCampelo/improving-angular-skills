@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable } from 'rxjs';
+import { catchError, map, Observable } from 'rxjs';
 
 import { BaseService } from 'src/app/shared/services/base.service';
+import { CepConsulta } from '../models/address';
 import { Provider } from '../models/provider';
 
 @Injectable({
@@ -31,7 +32,10 @@ export class ProviderService extends BaseService {
   }
 
   insertProvider(provider: Provider): Observable<Provider> {
-    return new Observable<Provider>();
+    return this.http.post(this.UrlServiceV1 + "fornecedores", provider, this.GetAuthHeaderJson())
+      .pipe(
+        map(super.extractData),
+        catchError(super.serviceError));
   }
 
   updateProvider(provider: Provider): Observable<Provider> {
@@ -40,5 +44,10 @@ export class ProviderService extends BaseService {
 
   deleteProvider(id: string): Observable<Provider> {
     return new Observable<Provider>();
+  }
+
+  consultarCep(cep: string): Observable<CepConsulta> {
+    return this.http.get<CepConsulta>(`https://viacep.com.br/ws/${cep}/json/`)
+      .pipe(catchError(super.serviceError));
   }
 }
