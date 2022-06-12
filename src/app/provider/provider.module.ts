@@ -6,12 +6,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProviderRoutingModule } from './provider-routing.module';
 import { ProviderService } from './shared/service/provider.service';
 
+import { NgBrazil } from 'ng-brazil';
+import { TextMaskModule } from 'angular2-text-mask';
+
 import { NewComponent } from './components/new/new.component';
 import { ListComponent } from './components/list/list.component';
 import { EditComponent } from './components/edit/edit.component';
 import { DeleteComponent } from './components/delete/delete.component';
 import { DetailComponent } from './components/detail/detail.component';
 import { ProviderAppComponent } from './provider.app.component';
+
+
 
 @NgModule({
   declarations: [
@@ -27,7 +32,9 @@ import { ProviderAppComponent } from './provider.app.component';
     ProviderRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgBrazil,
+    TextMaskModule
   ],
   exports: [
     NewComponent,

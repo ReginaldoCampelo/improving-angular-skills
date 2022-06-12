@@ -1,8 +1,12 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChildren } from '@angular/core';
 import { FormBuilder, FormControlName, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { fromEvent, merge, Observable } from 'rxjs';
+
+import { utilsBr } from 'js-brasil';
+import { NgBrazilValidators } from 'ng-brazil';
+import { ToastrService } from 'ngx-toastr';
+
 import { DisplayMessage, GenericValidator, ValidationMessages } from 'src/app/utils/generic-form-validation';
 import { Provider } from '../../shared/models/provider';
 import { ProviderService } from '../../shared/service/provider.service';
@@ -24,6 +28,7 @@ export class NewComponent implements OnInit, AfterViewInit {
   genericValidator: GenericValidator;
   displayMessage: DisplayMessage = {};
 
+  MASKS = utilsBr.MASKS;
   formResult: string = '';
 
   unsavedChanges: boolean;
@@ -35,6 +40,7 @@ export class NewComponent implements OnInit, AfterViewInit {
       },
       documento: {
         required: 'Informe o Documento',
+        cpf: 'CPF em formato inválido',
       },
       logradouro: {
         required: 'Informe o Logradouro',
@@ -63,7 +69,7 @@ export class NewComponent implements OnInit, AfterViewInit {
 
     this.providerForm = this.fb.group({
       nome: ['', [Validators.required]],
-      documento: ['', [Validators.required]],
+      documento: ['', [Validators.required, NgBrazilValidators.cpf]],
       ativo: ['', [Validators.required]],
       tipoFornecedor: ['', [Validators.required]],
 
