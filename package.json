@@ -22,10 +22,13 @@
     "@angular/router": "~13.3.0",
     "@ng-bootstrap/ng-bootstrap": "^12.1.1",
     "@popperjs/core": "^2.11.5",
+    "angular2-text-mask": "^9.0.0",
     "bootstrap": "^5.2.0-beta1",
+    "ng-brazil": "^2.4.5",
     "ng2-validation": "^4.2.0",
     "ngx-toastr": "^14.3.0",
     "rxjs": "~7.5.0",
+    "text-mask-addons": "^3.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
