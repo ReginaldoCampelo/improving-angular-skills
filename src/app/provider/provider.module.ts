@@ -13,9 +13,6 @@ import { DeleteComponent } from './components/delete/delete.component';
 import { DetailComponent } from './components/detail/detail.component';
 import { ProviderAppComponent } from './provider.app.component';
 
-
-
-
 @NgModule({
   declarations: [
     ProviderAppComponent,

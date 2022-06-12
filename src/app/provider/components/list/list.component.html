@@ -1,9 +1,9 @@
 <div class="container main-container">
 
-    <h1>Lista de Fornecedores</h1>
+    <h1 class="my-3">Lista de Fornecedores</h1>
 
     <p>
-        <a class="btn btn-info" [routerLink]="['/providers/insert']">Novo Fornecedor</a>
+        <a class="btn btn-info my-2" [routerLink]="['/providers/insert']">Novo Fornecedor</a>
     </p>
 
     <table class="table table-hover">
@@ -32,7 +32,7 @@
                 <a class="btn btn-warning" [routerLink]="['/providers/update',provider.id]">
                     <span class="fa fa-pencil-alt"></span>
                 </a>&nbsp;
-                <a class="btn btn-danger" [routerLink]="['/providers/delete',provider.id]">
+                <a class="btn btn-outline-danger" [routerLink]="['/providers/delete',provider.id]">
                     <span class="fa fa-trash"></span>
                 </a>
             </td>
