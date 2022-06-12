@@ -17,7 +17,8 @@
                 <div class="form-group my-2">
                     <label class="control-label">Nome</label>
                     <div>
-                        <input class="form-control" id="nome" type="text" placeholder="Nome (requerido)" formControlName="nome" [ngClass]="{'is-invalid': displayMessage.nome }" />
+                        <input class="form-control" id="nome" type="text" placeholder="Nome (requerido)"
+                            formControlName="nome" [ngClass]="{'is-invalid': displayMessage.nome }" />
                         <span class="text-danger" *ngIf="displayMessage.nome">
                             <p [innerHTML]="displayMessage.nome"></p>
                         </span>
@@ -27,7 +28,10 @@
                 <div class="form-group my-2">
                     <label class="control-label">Documento</label>
                     <div>
-                        <input class="form-control" id="documento" type="text" placeholder="{{ documentText }}" formControlName="documento" [textMask]="providerTypeForm().value === '1' ? { mask: MASKS.cpf.textMask } : { mask: MASKS.cnpj.textMask }" [ngClass]="{ 'is-invalid': displayMessage.documento }" />
+                        <input class="form-control" id="documento" type="text" placeholder="{{ documentText }}"
+                            formControlName="documento"
+                            [textMask]="providerTypeForm().value === '1' ? { mask: MASKS.cpf.textMask } : { mask: MASKS.cnpj.textMask }"
+                            [ngClass]="{ 'is-invalid': displayMessage.documento }" />
 
                         <span class="text-danger" *ngIf="displayMessage.documento">
                             <p [innerHTML]="displayMessage.documento"></p>
@@ -37,77 +41,97 @@
 
                 <div class="form-group my-2">
                     <label class="control-label" for="TipoFornecedor">Tipo</label><br>
-                    <input type="radio" value="1" id="tipoFornecedor" formControlName="tipoFornecedor" name="tipoFornecedor"> Pessoa Física<br>
-                    <input type="radio" value="2" id="tipoFornecedor" formControlName="tipoFornecedor" name="tipoFornecedor"> Pessoa Jurídica
+                    <input type="radio" value="1" id="tipoFornecedor" formControlName="tipoFornecedor"
+                        name="tipoFornecedor"> Pessoa Física<br>
+                    <input type="radio" value="2" id="tipoFornecedor" formControlName="tipoFornecedor"
+                        name="tipoFornecedor"> Pessoa Jurídica
                 </div>
 
                 <div class="form-group form-check my-2">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox" id="ativo" formControlName="ativo" name="ativo" value="true"> Ativo?
+                        <input class="form-check-input" type="checkbox" id="ativo" formControlName="ativo" name="ativo"
+                            value="true"> Ativo?
                     </label>
                 </div>
 
                 <h4 class="my-3">Endereço</h4>
                 <hr>
-                <div formGroupName="addressForm">
+                <div formGroupName="endereco">
                     <div class="form-group">
                         <label class="control-label">CEP</label>
                         <div>
-                            <input class="form-control" id="cep" type="text" placeholder="CEP (requerido)" formControlName="cep" [textMask]="{ mask: MASKS.cep.textMask }" [ngClass]="{ 'is-invalid': displayMessage.cep }" />
+
+                            <!-- ### linha 65 | Error: Property 'value' does not exist on type 'EventTarget' ###
+                            <input class="form-control" id="cep" type="text" placeholder="CEP (requerido)"
+                                (blur)="buscarCep($event.target.value)"
+                                formControlName="cep" [textMask]="{ mask: MASKS.cep.textMask }"
+                                [ngClass]="{ 'is-invalid': displayMessage.cep }" />
+                            -->
+
+                            <input class="form-control" id="cep" type="text" placeholder="CEP (requerido)"
+                                formControlName="cep" [textMask]="{ mask: MASKS.cep.textMask }"
+                                [ngClass]="{ 'is-invalid': displayMessage.cep }" />
                             <span class="text-danger" *ngIf="displayMessage.cep">
-                            <p [innerHTML]="displayMessage.cep"></p>
-                        </span>
+                                <p [innerHTML]="displayMessage.cep"></p>
+                            </span>
                         </div>
                     </div>
                     <div class="form-group my-2">
                         <label class="control-label">Logradouro</label>
                         <div>
-                            <input class="form-control" id="logradouro" type="text" placeholder="Logradouro (requerido)" formControlName="logradouro" [ngClass]="{ 'is-invalid': displayMessage.logradouro }" />
+                            <input class="form-control" id="logradouro" type="text" placeholder="Logradouro (requerido)"
+                                formControlName="logradouro" [ngClass]="{ 'is-invalid': displayMessage.logradouro }" />
                             <span class="text-danger" *ngIf="displayMessage.logradouro">
-                            <p [innerHTML]="displayMessage.logradouro"></p>
-                        </span>
+                                <p [innerHTML]="displayMessage.logradouro"></p>
+                            </span>
                         </div>
                     </div>
                     <div class="form-group my-2">
                         <label class="control-label">Número</label>
                         <div>
-                            <input class="form-control" id="numero" type="text" placeholder="Número (requerido)" formControlName="numero" [ngClass]="{ 'is-invalid': displayMessage.numero }" />
+                            <input class="form-control" id="numero" type="text" placeholder="Número (requerido)"
+                                formControlName="numero" [ngClass]="{ 'is-invalid': displayMessage.numero }" />
                             <span class="text-danger" *ngIf="displayMessage.numero">
-                            <p [innerHTML]="displayMessage.numero"></p>
-                        </span>
+                                <p [innerHTML]="displayMessage.numero"></p>
+                            </span>
                         </div>
                     </div>
                     <div class="form-group my-2">
                         <label class="control-label">Complemento</label>
                         <div>
-                            <input class="form-control" id="complemento" type="text" placeholder="Complemento" formControlName="complemento" [ngClass]="{ 'is-invalid': displayMessage.complemento }" />
+                            <input class="form-control" id="complemento" type="text" placeholder="Complemento"
+                                formControlName="complemento"
+                                [ngClass]="{ 'is-invalid': displayMessage.complemento }" />
                             <span class="text-danger" *ngIf="displayMessage.complemento">
-                            <p [innerHTML]="displayMessage.complemento"></p>
-                        </span>
+                                <p [innerHTML]="displayMessage.complemento"></p>
+                            </span>
                         </div>
                     </div>
                     <div class="form-group my-2">
                         <label class="control-label">Bairro</label>
                         <div>
-                            <input class="form-control" id="bairro" type="text" placeholder="Bairro (requerido)" formControlName="bairro" [ngClass]="{ 'is-invalid': displayMessage.bairro }" />
+                            <input class="form-control" id="bairro" type="text" placeholder="Bairro (requerido)"
+                                formControlName="bairro" [ngClass]="{ 'is-invalid': displayMessage.bairro }" />
                             <span class="text-danger" *ngIf="displayMessage.bairro">
-                            <p [innerHTML]="displayMessage.bairro"></p>
-                        </span>
+                                <p [innerHTML]="displayMessage.bairro"></p>
+                            </span>
                         </div>
                     </div>
                     <div class="form-group my-2">
                         <label class="control-label">Cidade</label>
                         <div>
-                            <input class="form-control" id="cidade" type="text" placeholder="Cidade (requerido)" formControlName="cidade" [ngClass]="{ 'is-invalid': displayMessage.cidade }" />
+                            <input class="form-control" id="cidade" type="text" placeholder="Cidade (requerido)"
+                                formControlName="cidade" [ngClass]="{ 'is-invalid': displayMessage.cidade }" />
                             <span class="text-danger" *ngIf="displayMessage.cidade">
-                            <p [innerHTML]="displayMessage.cidade"></p>
-                        </span>
+                                <p [innerHTML]="displayMessage.cidade"></p>
+                            </span>
                         </div>
                     </div>
                     <div class="form-group my-2">
                         <label class="control-label">Estado</label>
                         <div>
-                            <select class="form-control" id="estado" formControlName="estado" [ngClass]="{ 'is-invalid': displayMessage.estado }">
+                            <select class="form-control" id="estado" formControlName="estado"
+                                [ngClass]="{ 'is-invalid': displayMessage.estado }">
                                 <option value="">Estado</option>
                                 <option value="AC">Acre</option>
                                 <option value="AL">Alagoas</option>
@@ -136,10 +160,10 @@
                                 <option value="SP">São Paulo</option>
                                 <option value="SE">Sergipe</option>
                                 <option value="TO">Tocantins</option>
-                              </select>
+                            </select>
                             <span class="text-danger" *ngIf="displayMessage.estado">
-                            <p [innerHTML]="displayMessage.estado"></p>
-                        </span>
+                                <p [innerHTML]="displayMessage.estado"></p>
+                            </span>
                         </div>
                     </div>
                 </div>

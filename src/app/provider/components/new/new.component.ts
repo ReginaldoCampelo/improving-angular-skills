@@ -1,22 +1,25 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChildren } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControlName, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChildren, ElementRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormControlName, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { fromEvent, merge, Observable } from 'rxjs';
 
-import { utilsBr } from 'js-brasil';
-import { NgBrazilValidators } from 'ng-brazil';
+import { Observable, fromEvent, merge } from 'rxjs';
+
 import { ToastrService } from 'ngx-toastr';
+import { NgBrazilValidators } from 'ng-brazil';
+import { utilsBr } from 'js-brasil';
 
 import { DisplayMessage, GenericValidator, ValidationMessages } from 'src/app/utils/generic-form-validation';
 import { Provider } from '../../shared/models/provider';
 import { ProviderService } from '../../shared/service/provider.service';
+import { CepConsulta } from '../../shared/models/address';
+import { StringUtils } from 'src/app/utils/string-utils';
 
 @Component({
   selector: 'app-new',
   templateUrl: './new.component.html',
   styleUrls: ['./new.component.css']
 })
-export class NewComponent implements OnInit, AfterViewInit {
+export class NewComponent implements OnInit {
 
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
 
@@ -27,7 +30,6 @@ export class NewComponent implements OnInit, AfterViewInit {
   validationMessages: ValidationMessages;
   genericValidator: GenericValidator;
   displayMessage: DisplayMessage = {};
-
   documentText: string;
 
   MASKS = utilsBr.MASKS;
@@ -43,7 +45,7 @@ export class NewComponent implements OnInit, AfterViewInit {
       documento: {
         required: 'Informe o Documento',
         cpf: 'CPF em formato inválido',
-        cnpj: 'CNPJ em formato inválido',
+        cnpj: 'CNPJ em formato inválido'
       },
       logradouro: {
         required: 'Informe o Logradouro',
@@ -56,7 +58,7 @@ export class NewComponent implements OnInit, AfterViewInit {
       },
       cep: {
         required: 'Informe o CEP',
-        cep: 'CEP em formato inválido',
+        cep: 'CEP em formato inválido'
       },
       cidade: {
         required: 'Informe a Cidade',
@@ -77,14 +79,14 @@ export class NewComponent implements OnInit, AfterViewInit {
       ativo: ['', [Validators.required]],
       tipoFornecedor: ['', [Validators.required]],
 
-      addressForm: this.fb.group({
+      endereco: this.fb.group({
         logradouro: ['', [Validators.required]],
         numero: ['', [Validators.required]],
         complemento: [''],
         bairro: ['', [Validators.required]],
-        cep: ['', [Validators.required, NgBrazilValidators.cep]],
+        cep: ['', [Validators.required]],
         cidade: ['', [Validators.required]],
-        estado: ['', [Validators.required]],
+        estado: ['', [Validators.required]]
       })
     });
 
@@ -138,10 +140,40 @@ export class NewComponent implements OnInit, AfterViewInit {
     return this.providerForm.get('documento');
   }
 
+  buscarCep(cep: string) {
+    
+    cep = StringUtils.somenteNumeros(cep);
+    if(cep.length < 8) return;
+
+    this.providerService.consultarCep(cep).subscribe(
+      cepRetorno => this.preencherEnderecoConsulta(cepRetorno),
+      erro => this.errors.push(erro));
+  }
+
+  preencherEnderecoConsulta(cepConsulta: CepConsulta) {
+
+    this.providerForm.patchValue({
+      endereco: {
+        logradouro: cepConsulta.logradouro,
+        bairro: cepConsulta.bairro,
+        cep: cepConsulta.cep,
+        cidade: cepConsulta.localidade,
+        estado: cepConsulta.uf
+      }
+  })
+}
+
   insertProvider() {
     if (this.providerForm.dirty && this.providerForm.valid) {
+
       this.provider = Object.assign({}, this.provider, this.providerForm.value);
       this.formResult = JSON.stringify(this.provider);
+
+      this.provider.endereco.cep = StringUtils.somenteNumeros(this.provider.endereco.cep);
+      this.provider.documento = StringUtils.somenteNumeros(this.provider.documento);
+
+      // forçando o tipo fornecedor ser serializado como INT
+      this.provider.tipoFornecedor = parseInt(this.provider.tipoFornecedor.toString());
 
       this.providerService.insertProvider(this.provider)
       .subscribe(
